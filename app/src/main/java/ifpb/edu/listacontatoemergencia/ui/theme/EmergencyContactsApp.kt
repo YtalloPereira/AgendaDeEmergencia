@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,31 +26,36 @@ fun EmergencyContactsApp() {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("Agenda de Telefones de Emergência") },
-                    navigationIcon = {
-                        // Condicionalmente mostra o ícone de navegação (seta para voltar) apenas quando não estamos na tela inicial
-                        if (navController.currentBackStackEntry?.destination?.route != "home") {
-                            IconButton(onClick = { navController.popBackStack() }) {
-                                Icon(Icons.Default.ArrowBack, contentDescription = "Voltar")
-                            }
-                        }
-                    }
+                    title = { Text("Agenda de Telefones de Emergência") }
+                    // Não será exibido botão de "Voltar" em nenhuma tela, incluindo as de categoria
                 )
             }
         ) { paddingValues ->
-            // Padding adicional para o conteúdo abaixo da AppBar
+
             NavHost(navController = navController, startDestination = "home") {
                 composable("home") {
                     HomeScreen(navController = navController, modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
                 }
                 composable("federal") {
-                    CategoryScreen(category = emergencyContacts[0], modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
+                    CategoryScreen(
+                        category = emergencyContacts[0],
+                        navController = navController,
+                        modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
+                    )
                 }
                 composable("estadual") {
-                    CategoryScreen(category = emergencyContacts[1], modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
+                    CategoryScreen(
+                        category = emergencyContacts[1],
+                        navController = navController,
+                        modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
+                    )
                 }
                 composable("municipal") {
-                    CategoryScreen(category = emergencyContacts[2], modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
+                    CategoryScreen(
+                        category = emergencyContacts[2],
+                        navController = navController,
+                        modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
+                    )
                 }
             }
         }
@@ -84,9 +87,8 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
     }
 }
 
-
 @Composable
-fun CategoryScreen(category: ContactCategory, modifier: Modifier = Modifier) {
+fun CategoryScreen(category: ContactCategory, navController: NavController, modifier: Modifier = Modifier) {
     Column(modifier = modifier.padding(16.dp)) {
         // Título da categoria
         Text(text = category.title, fontSize = 24.sp, modifier = Modifier.padding(bottom = 16.dp))
@@ -97,5 +99,21 @@ fun CategoryScreen(category: ContactCategory, modifier: Modifier = Modifier) {
                 EmergencyContactItem(contact = contact)
             }
         }
+
+        // Botão de Voltar
+        Button(
+            onClick = { navController.popBackStack("home", false) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp) // Espaçamento acima do botão
+        ) {
+            Text("Voltar")
+        }
     }
 }
+
+@Composable
+fun EmergencyContactItem(contact: String) {
+    Text(text = contact, fontSize = 18.sp, modifier = Modifier.padding(bottom = 8.dp))
+}
+
