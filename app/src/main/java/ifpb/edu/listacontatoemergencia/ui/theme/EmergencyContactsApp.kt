@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,7 +27,17 @@ fun EmergencyContactsApp() {
     MaterialTheme {
         Scaffold(
             topBar = {
-                TopAppBar(title = { Text("Agenda de Telefones de Emergência") })
+                TopAppBar(
+                    title = { Text("Agenda de Telefones de Emergência") },
+                    navigationIcon = {
+                        // Condicionalmente mostra o ícone de navegação (seta para voltar) apenas quando não estamos na tela inicial
+                        if (navController.currentBackStackEntry?.destination?.route != "home") {
+                            IconButton(onClick = { navController.popBackStack() }) {
+                                Icon(Icons.Default.ArrowBack, contentDescription = "Voltar")
+                            }
+                        }
+                    }
+                )
             }
         ) { paddingValues ->
             // Padding adicional para o conteúdo abaixo da AppBar
