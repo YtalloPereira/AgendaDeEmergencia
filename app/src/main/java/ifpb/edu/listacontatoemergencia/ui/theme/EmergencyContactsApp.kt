@@ -35,7 +35,7 @@ fun EmergencyContactsApp() {
                 composable("home") {
                     HomeScreen(navController = navController, modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
                 }
-                // Navegação dinâmica para cada categoria
+                // Navegação dinâmica para cada categoria usando o script de data
                 emergencyContacts.forEach { category ->
                     composable(category.title.lowercase()) {
                         CategoryScreen(
@@ -78,7 +78,7 @@ fun CategoryScreen(category: ContactCategory, navController: NavController, modi
             }
         }
 
-        // Botão Voltar
+        // Botão de Voltar
         Button(
             onClick = { navController.popBackStack("home", false) },
             modifier = Modifier
