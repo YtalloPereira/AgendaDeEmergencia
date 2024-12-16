@@ -111,8 +111,3 @@ fun CategoryScreen(category: ContactCategory, navController: NavController, modi
     }
 }
 
-@Composable
-fun EmergencyContactItem(contact: String) {
-    Text(text = contact, fontSize = 18.sp, modifier = Modifier.padding(bottom = 8.dp))
-}
-
