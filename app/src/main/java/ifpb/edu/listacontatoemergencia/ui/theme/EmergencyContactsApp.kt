@@ -35,26 +35,15 @@ fun EmergencyContactsApp() {
                 composable("home") {
                     HomeScreen(navController = navController, modifier = Modifier.padding(top = paddingValues.calculateTopPadding()))
                 }
-                composable("federal") {
-                    CategoryScreen(
-                        category = emergencyContacts[0],
-                        navController = navController,
-                        modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
-                    )
-                }
-                composable("estadual") {
-                    CategoryScreen(
-                        category = emergencyContacts[1],
-                        navController = navController,
-                        modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
-                    )
-                }
-                composable("municipal") {
-                    CategoryScreen(
-                        category = emergencyContacts[2],
-                        navController = navController,
-                        modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
-                    )
+                // Navegação dinâmica para cada categoria
+                emergencyContacts.forEach { category ->
+                    composable(category.title.lowercase()) {
+                        CategoryScreen(
+                            category = category,
+                            navController = navController,
+                            modifier = Modifier.padding(top = paddingValues.calculateTopPadding())
+                        )
+                    }
                 }
             }
         }
@@ -64,24 +53,14 @@ fun EmergencyContactsApp() {
 @Composable
 fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
     Column(modifier = modifier.padding(16.dp)) {
-        // Botões de categoria
-        Button(
-            onClick = { navController.navigate("federal") },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
-        ) {
-            Text("Federal")
-        }
-        Button(
-            onClick = { navController.navigate("estadual") },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
-        ) {
-            Text("Estadual")
-        }
-        Button(
-            onClick = { navController.navigate("municipal") },
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
-        ) {
-            Text("Municipal")
+        // Botões de categoria gerados dinamicamente
+        emergencyContacts.forEach { category ->
+            Button(
+                onClick = { navController.navigate(category.title.lowercase()) },
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+            ) {
+                Text(category.title)
+            }
         }
     }
 }
@@ -99,7 +78,7 @@ fun CategoryScreen(category: ContactCategory, navController: NavController, modi
             }
         }
 
-        // Botão  Voltar
+        // Botão Voltar
         Button(
             onClick = { navController.popBackStack("home", false) },
             modifier = Modifier
