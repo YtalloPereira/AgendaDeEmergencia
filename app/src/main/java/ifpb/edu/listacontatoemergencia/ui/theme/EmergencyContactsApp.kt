@@ -20,14 +20,13 @@ import ifpb.edu.listacontatoemergencia.models.ContactCategory
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EmergencyContactsApp() {
-    val navController = rememberNavController() // Controle de navegação
+    val navController = rememberNavController()
 
     MaterialTheme {
         Scaffold(
             topBar = {
                 TopAppBar(
                     title = { Text("Agenda de Telefones de Emergência") }
-                    // Não será exibido botão de "Voltar" em nenhuma tela, incluindo as de categoria
                 )
             }
         ) { paddingValues ->
@@ -65,7 +64,7 @@ fun EmergencyContactsApp() {
 @Composable
 fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
     Column(modifier = modifier.padding(16.dp)) {
-        // Botões para navegar para cada categoria
+        // Botões de categoria
         Button(
             onClick = { navController.navigate("federal") },
             modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
@@ -90,17 +89,17 @@ fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
 @Composable
 fun CategoryScreen(category: ContactCategory, navController: NavController, modifier: Modifier = Modifier) {
     Column(modifier = modifier.padding(16.dp)) {
-        // Título da categoria
+        // Título
         Text(text = category.title, fontSize = 24.sp, modifier = Modifier.padding(bottom = 16.dp))
 
-        // Exibição dos contatos
+        // Contatos
         LazyColumn {
             items(category.contacts) { contact ->
                 EmergencyContactItem(contact = contact)
             }
         }
 
-        // Botão de Voltar
+        // Botão  Voltar
         Button(
             onClick = { navController.popBackStack("home", false) },
             modifier = Modifier
