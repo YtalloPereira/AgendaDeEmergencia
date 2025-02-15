@@ -15,24 +15,29 @@ import androidx.navigation.NavController
 import ifpb.edu.listacontatoemergencia.models.ContactCategory
 
 @Composable
-fun CategoryScreen(category: ContactCategory, navController: NavController, modifier: Modifier = Modifier) {
+fun CategoryScreen(
+    category: ContactCategory,
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
     Column(modifier = modifier.padding(16.dp)) {
-        // Título
-        Text(text = category.title, fontSize = 24.sp, modifier = Modifier.padding(bottom = 16.dp))
+        Text(
+            text = category.title,
+            fontSize = 24.sp,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
 
-        // Contatos
         LazyColumn {
             items(category.contacts) { contact ->
                 EmergencyContactItem(contact = contact)
             }
         }
 
-        // Botão de Voltar
         Button(
-            onClick = { navController.popBackStack("home", false) },
+            onClick = { navController.popBackStack() },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp) // Espaçamento acima do botão
+                .padding(top = 16.dp)
         ) {
             Text("Voltar")
         }

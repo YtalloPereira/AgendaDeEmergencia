@@ -12,13 +12,17 @@ import androidx.navigation.NavController
 import ifpb.edu.listacontatoemergencia.data.emergencyContacts
 
 @Composable
-fun HomeScreen(navController: NavController, modifier: Modifier = Modifier) {
+fun HomeScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
     Column(modifier = modifier.padding(16.dp)) {
-        // Botões de categoria gerados dinamicamente
         emergencyContacts.forEach { category ->
             Button(
                 onClick = { navController.navigate(category.title.lowercase()) },
-                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp)
             ) {
                 Text(category.title)
             }
