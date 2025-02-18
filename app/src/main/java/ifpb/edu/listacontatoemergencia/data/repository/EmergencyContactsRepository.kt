@@ -15,13 +15,6 @@ class EmergencyContactsRepository(
     private val emergencyContactDao: EmergencyContactDao,
     private val contactCategoryDao: ContactCategoryDao
 ) {
-    // Operações para contatos
-    val allContacts: Flow<List<EmergencyContact>> = emergencyContactDao.getAllContacts()
-
-    fun getContactsByCategory(categoryId: Long): Flow<List<EmergencyContact>> {
-        return emergencyContactDao.getContactsByCategoryId(categoryId)
-    }
-
     suspend fun insertContact(contact: EmergencyContact): Long {
         return emergencyContactDao.insertContact(contact)
     }
@@ -34,17 +27,10 @@ class EmergencyContactsRepository(
         emergencyContactDao.deleteContact(contact)
     }
 
-    suspend fun deleteContactById(id: Long) {
-        emergencyContactDao.deleteContactById(id)
-    }
-
     // Operações para categorias
     val allCategories: Flow<List<ContactCategory>> = contactCategoryDao.getAllCategories()
     val allCategoriesWithContacts: Flow<List<CategoryWithContacts>> = contactCategoryDao.getCategoriesWithContacts()
 
-    fun getCategoryWithContacts(categoryId: Long): Flow<CategoryWithContacts> {
-        return contactCategoryDao.getCategoryWithContacts(categoryId)
-    }
 
     suspend fun insertCategory(category: ContactCategory): Long {
         return contactCategoryDao.insertCategory(category)

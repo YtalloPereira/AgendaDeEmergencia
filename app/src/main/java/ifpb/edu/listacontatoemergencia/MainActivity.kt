@@ -29,11 +29,7 @@ class MainActivity : ComponentActivity() {
                 onToggleDarkMode = viewModel::toggleDarkMode,
                 categoriesWithContacts = categoriesWithContacts,
                 onAddContact = viewModel::addContact,
-                onUpdateContact = viewModel::updateContact,
                 onDeleteContact = viewModel::deleteContact,
-                onAddCategory = viewModel::addCategory,
-                onUpdateCategory = viewModel::updateCategory,
-                onDeleteCategory = viewModel::deleteCategory
             )
         }
     }

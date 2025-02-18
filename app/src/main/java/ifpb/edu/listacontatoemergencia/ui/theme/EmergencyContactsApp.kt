@@ -10,7 +10,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ifpb.edu.listacontatoemergencia.models.CategoryWithContacts
-import ifpb.edu.listacontatoemergencia.models.ContactCategory
 import ifpb.edu.listacontatoemergencia.models.EmergencyContact
 import ifpb.edu.listacontatoemergencia.ui.theme.AddContactDialog
 import ifpb.edu.listacontatoemergencia.ui.theme.CategoryScreen
@@ -23,11 +22,7 @@ fun EmergencyContactsApp(
     onToggleDarkMode: () -> Unit,
     categoriesWithContacts: List<CategoryWithContacts>,
     onAddContact: (EmergencyContact) -> Unit,
-    onUpdateContact: (EmergencyContact) -> Unit,
     onDeleteContact: (EmergencyContact) -> Unit,
-    onAddCategory: (ContactCategory) -> Unit,
-    onUpdateCategory: (ContactCategory) -> Unit,
-    onDeleteCategory: (ContactCategory) -> Unit
 ) {
     val navController = rememberNavController()
     var showAddContactDialog by remember { mutableStateOf(false) }
@@ -70,8 +65,6 @@ fun EmergencyContactsApp(
                     HomeScreen(
                         categoriesWithContacts = categoriesWithContacts,
                         navController = navController,
-                        onAddCategory = { onAddCategory(it) },
-                        onDeleteCategory = { onDeleteCategory(it) },
                         modifier = Modifier
                     )
                 }

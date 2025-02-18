@@ -10,10 +10,3 @@ data class CategoryWithContacts(
     )
     val contacts: List<EmergencyContact>
 )
-
-/**
-data class CategoryWithContacts(
-    val category: ContactCategory,
-    val contacts: List<EmergencyContact>
-)
- **/
