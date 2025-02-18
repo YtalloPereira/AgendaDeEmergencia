@@ -1,45 +1,63 @@
 package ifpb.edu.listacontatoemergencia.ui.theme
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import ifpb.edu.listacontatoemergencia.models.ContactCategory
+import ifpb.edu.listacontatoemergencia.models.CategoryWithContacts
+import ifpb.edu.listacontatoemergencia.models.EmergencyContact
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryScreen(
-    category: ContactCategory,
+    categoryWithContacts: CategoryWithContacts,
     navController: NavController,
+    onDeleteContact: (EmergencyContact) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier.padding(16.dp)) {
-        Text(
-            text = category.title,
-            fontSize = 24.sp,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
+    val category = categoryWithContacts.category
+    val contacts = categoryWithContacts.contacts
 
-        LazyColumn {
-            items(category.contacts) { contact ->
-                EmergencyContactItem(contact = contact)
-            }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(category.title) },
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Voltar")
+                    }
+                }
+            )
         }
-
-        Button(
-            onClick = { navController.popBackStack() },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = modifier
+                .padding(paddingValues)
+                .padding(16.dp)
         ) {
-            Text("Voltar")
+            if (contacts.isEmpty()) {
+                item {
+                    Text(
+                        text = "Nenhum contato nesta categoria",
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier.padding(vertical = 16.dp)
+                    )
+                }
+            } else {
+                items(contacts) { contact ->
+                    EmergencyContactItem(
+                        contact = contact,
+                        onDeleteContact = { onDeleteContact(contact) }
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
+            }
         }
     }
 }

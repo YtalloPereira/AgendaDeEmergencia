@@ -1,3 +1,13 @@
 package ifpb.edu.listacontatoemergencia.models
 
-data class EmergencyContact(val name: String, val phone: String)
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "emergency_contacts")
+data class EmergencyContact(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
+    val name: String,
+    val phone: String,
+    val categoryId: Long
+)
