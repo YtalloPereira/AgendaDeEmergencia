@@ -22,7 +22,7 @@ fun HomeScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Categorias de Contatos",
+                text = "Esferas",
                 style = MaterialTheme.typography.headlineSmall
             )
 
