@@ -9,7 +9,6 @@ import ifpb.edu.listacontatoemergencia.data.UserPreferencesRepository
 import ifpb.edu.listacontatoemergencia.data.dataBase.AppDatabase
 import ifpb.edu.listacontatoemergencia.data.repository.EmergencyContactsRepository
 import ifpb.edu.listacontatoemergencia.models.CategoryWithContacts
-import ifpb.edu.listacontatoemergencia.models.ContactCategory
 import ifpb.edu.listacontatoemergencia.models.EmergencyContact
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -70,34 +69,9 @@ class MainViewModel(
         }
     }
 
-    fun updateContact(contact: EmergencyContact) {
-        viewModelScope.launch {
-            repository.updateContact(contact)
-        }
-    }
-
     fun deleteContact(contact: EmergencyContact) {
         viewModelScope.launch {
             repository.deleteContact(contact)
-        }
-    }
-
-    // Funções para gerenciar categorias
-    fun addCategory(category: ContactCategory) {
-        viewModelScope.launch {
-            repository.insertCategory(category)
-        }
-    }
-
-    fun updateCategory(category: ContactCategory) {
-        viewModelScope.launch {
-            repository.updateCategory(category)
-        }
-    }
-
-    fun deleteCategory(category: ContactCategory) {
-        viewModelScope.launch {
-            repository.deleteCategory(category)
         }
     }
 }
