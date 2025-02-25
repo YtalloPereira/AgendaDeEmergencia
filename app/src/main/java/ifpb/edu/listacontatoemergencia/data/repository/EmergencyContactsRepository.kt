@@ -19,10 +19,6 @@ class EmergencyContactsRepository(
         return emergencyContactDao.insertContact(contact)
     }
 
-    suspend fun updateContact(contact: EmergencyContact) {
-        emergencyContactDao.updateContact(contact)
-    }
-
     suspend fun deleteContact(contact: EmergencyContact) {
         emergencyContactDao.deleteContact(contact)
     }
@@ -30,19 +26,6 @@ class EmergencyContactsRepository(
     // Operações para categorias
     val allCategories: Flow<List<ContactCategory>> = contactCategoryDao.getAllCategories()
     val allCategoriesWithContacts: Flow<List<CategoryWithContacts>> = contactCategoryDao.getCategoriesWithContacts()
-
-
-    suspend fun insertCategory(category: ContactCategory): Long {
-        return contactCategoryDao.insertCategory(category)
-    }
-
-    suspend fun updateCategory(category: ContactCategory) {
-        contactCategoryDao.updateCategory(category)
-    }
-
-    suspend fun deleteCategory(category: ContactCategory) {
-        contactCategoryDao.deleteCategory(category)
-    }
 
     fun prepopulateDatabase() {
         CoroutineScope(Dispatchers.IO).launch {
